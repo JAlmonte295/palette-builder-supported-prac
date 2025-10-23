@@ -16,9 +16,10 @@ function NavBar() {
     <nav>
       {pages.map((page, idx) => {
         return (
-          <Link key={idx} to={page.path}>
-            {page.text}
-          </Link>
+          <div key={idx}>
+            <Link to={page.path}>{page.text}</Link>
+            <br />
+          </div>
         );
       })}
     </nav>
