@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import ColorPicker from './ColorPicker';
 import PaletteViewer from './PaletteViewer';
+import { useNavigate } from 'react-router';
 
 const initialState = {
   name: '',
   colors: [],
 };
 
-function PaletteForm({ addPalette }) {
+function PaletteForm({ palettes, addPalette }) {
   const [palette, setPalette] = useState(initialState);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleNameChange = (e) => {
     setPalette({ ...palette, name: e.target.value });
@@ -24,7 +27,21 @@ function PaletteForm({ addPalette }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Checking for duplicate name
+    for (let i = 0; i < palettes.length; i++) {
+      if (palettes[i].name.toLowerCase() === palette.name.toLocaleLowerCase()) {
+        setError('Palette name already exists');
+        setTimeout(() => {
+          setError('');
+        }, 3000);
+        return;
+      }
+    }
+
     addPalette(palette);
+    setPalette(initialState);
+    navigate('/palettes');
   };
 
   return (
@@ -37,6 +54,11 @@ function PaletteForm({ addPalette }) {
       <ColorPicker palette={palette} setPalette={setPalette} />
       <br />
       <input type="submit" value="Create Palette" />
+      {error ? (
+        <h3 style={{ color: 'red', fontWeight: 'bold' }}>{error}</h3>
+      ) : (
+        ''
+      )}
     </form>
   );
 }

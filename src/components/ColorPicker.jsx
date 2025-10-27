@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 function ColorPicker({ palette, setPalette }) {
-  const [currentColor, setCurrentColor] = useState('');
+  const [currentColor, setCurrentColor] = useState('#000000');
 
   const handleCurrentColorChange = (e) => {
     setCurrentColor(e.target.value);

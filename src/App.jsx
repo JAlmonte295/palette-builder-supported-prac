@@ -21,10 +21,10 @@ function App() {
     },
     {
       path: '/palettes/new',
-      element: <New addPalette={addPalette} />,
+      element: <New palettes={palettes} addPalette={addPalette} />,
     },
     {
-      path: '/palettes/:id',
+      path: '/palettes/:name',
       element: <PaletteDetail palettes={palettes} />,
     },
     {

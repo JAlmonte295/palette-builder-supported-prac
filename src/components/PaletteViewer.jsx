@@ -1,7 +1,7 @@
 function PaletteViewer({ palette, handleColorRemove }) {
   return (
     <div>
-      <h5>{palette.name}</h5>
+      <h3>{palette.name}</h3>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         {palette.colors.map((color, i) => {
           return (
