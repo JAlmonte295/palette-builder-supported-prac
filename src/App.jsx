@@ -4,14 +4,32 @@ import Home from './pages/Home';
 import New from './pages/New';
 import PaletteDetail from './pages/PaletteDetail';
 import NavBar from './components/NavBar';
-import { Routes, Route } from 'react-router';
+import { Routes, Route, useNavigate } from 'react-router';
 import { useState } from 'react';
 
 function App() {
   const [palettes, setPalettes] = useState([]);
+  const navigate = useNavigate();
 
   function addPalette(newPalette) {
+    newPalette.id = palettes.length + 1;
     setPalettes([...palettes, newPalette]);
+  }
+
+  function updatePalettes(updatedPalette) {
+    const updatedPalettes = palettes.map((p) => {
+      if (p.id === updatedPalette.id) {
+        return updatedPalette;
+      } else {
+        return p;
+      }
+    });
+    setPalettes(updatedPalettes);
+  }
+
+  function deletePalette(name) {
+    setPalettes(palettes.filter((p) => p.name !== name));
+    navigate('/palettes');
   }
 
   const routes = [
@@ -25,11 +43,13 @@ function App() {
     },
     {
       path: '/palettes/:name',
-      element: <PaletteDetail palettes={palettes} />,
+      element: (
+        <PaletteDetail palettes={palettes} deletePalette={deletePalette} />
+      ),
     },
     {
-      path: '/palettes/:id/edit',
-      element: <Edit palettes={palettes} />,
+      path: '/palettes/:name/edit',
+      element: <Edit palettes={palettes} updatePalettes={updatePalettes} />,
     },
   ];
 

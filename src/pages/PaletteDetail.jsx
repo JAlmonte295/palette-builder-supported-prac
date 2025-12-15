@@ -1,8 +1,8 @@
-import { useParams } from 'react-router';
+import { useParams, Link } from 'react-router';
 import { useState, useEffect } from 'react';
 import PaletteViewer from '../components/PaletteViewer';
 
-function PaletteDetail({ palettes }) {
+function PaletteDetail({ palettes, deletePalette }) {
   const [currentPalette, setCurrentPalette] = useState(null);
   const { name } = useParams();
 
@@ -19,6 +19,8 @@ function PaletteDetail({ palettes }) {
   return (
     <div>
       <PaletteViewer palette={currentPalette} />
+      <Link to={`/palettes/${currentPalette.name}/edit`}>Edit</Link>
+      <button onClick={() => deletePalette(currentPalette.name)}>Delete</button>
     </div>
   );
 }
